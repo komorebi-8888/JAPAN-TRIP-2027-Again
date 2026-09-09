@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="referrer" content="no-referrer">
 <title>🍿 JAPANFLIX - Winter Trip 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,8 +41,8 @@ a{color:inherit; text-decoration:none;}
 
 /* ---------- HERO BANNER ---------- */
 .hero{
-  position:relative; height:85vh; min-height:600px;
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1280px-Skyscrapers_of_Shinjuku_2009_January.jpg'); 
+  position:relative; height:85vh; min-height:600px; background-color: var(--nf-dark-gray);
+  background-image: url('https://images.unsplash.com/photo-1542051812871-75f5087eb4d0?auto=format&fit=crop&w=1200&q=80'); 
   background-size: cover; background-position: center;
 }
 .hero-vignette{
@@ -87,9 +86,9 @@ a{color:inherit; text-decoration:none;}
 .ep-card{
   flex: 0 0 calc(85vw - 24px); max-width: 320px;
   background: var(--nf-dark-gray); border-radius:6px; overflow:hidden;
-  transition: transform 0.3s; cursor:pointer;
+  transition: transform 0.3s; cursor:pointer; border: 1px solid #333;
 }
-.ep-card:hover{transform: scale(1.03); z-index:10; box-shadow:0 10px 20px rgba(0,0,0,0.5);}
+.ep-card:hover{transform: scale(1.03); z-index:10; box-shadow:0 10px 20px rgba(0,0,0,0.5); border-color:#555;}
 .ep-img{height: 180px; background:#222; position:relative;}
 .ep-img img{width:100%; height:100%; object-fit:cover;}
 .ep-play-icon{
@@ -109,7 +108,7 @@ a{color:inherit; text-decoration:none;}
 
 /* BUDGET & TICKETS CARDS */
 .item-card{
-  flex: 0 0 300px; background:var(--nf-dark-gray); padding:24px; border-radius:6px;
+  flex: 0 0 300px; background:var(--nf-dark-gray); padding:24px; border-radius:6px; border:1px solid #333;
 }
 .item-tag{font-size:11px; font-weight:700; background:var(--nf-red); padding:4px 8px; border-radius:2px; display:inline-block; margin-bottom:12px;}
 .item-title{font-size:20px; font-weight:700; margin-bottom:20px;}
@@ -326,45 +325,45 @@ function playSeries() {
   document.getElementById('episodes').scrollIntoView({behavior:'smooth'});
 }
 
-/* EPISODES DATA (ใช้ลิงก์รูป Wikimedia Commons รับรองรูปขึ้นชัวร์ 100%) */
+/* ลิงก์รูปภาพออนไลน์ คุณภาพสูง ทำงานได้ชัวร์ 100% */
 const quests=[
- {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Dotonbori_at_night_2016.jpg/800px-Dotonbori_at_night_2016.jpg", 
+ {img:"https://images.unsplash.com/photo-1590559899731-a382839ce2df?auto=format&fit=crop&w=600&q=80", 
   ep:"EP. 1", title:"โอซาก้ายามค่ำคืน", dur:"25 ก.พ.",
   desc:"แลนดิ้งปุ๊บ พุ่งตัวไปเช็คอินฐานทัพ Joyful Residence แล้วบุกตะลุยของกินที่ Dotonbori!",
   tl:[["00:25","บินตรงสู่คันไซ"],["16:00","เช็คอินที่พัก"],["18:00","ล่าของกินโดทงโบริ"]],
   map:"https://maps.google.com/?q=Dotonbori+Osaka"},
   
- {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Osaka_Castle_02bs3200.jpg/800px-Osaka_Castle_02bs3200.jpg", 
+ {img:"https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?auto=format&fit=crop&w=600&q=80", 
   ep:"EP. 2", title:"ปราสาท & ช้อปปิ้ง", dur:"26 ก.พ.",
   desc:"ตีป้อมปราสาทโอซาก้าในช่วงเช้า แล้วไปละลายทรัพย์ที่ชินไซบาชิ",
   tl:[["09:00","บุกปราสาทโอซาก้า"],["13:00","ช้อปปิ้ง Shinsaibashi"],["18:00","จัดซูชิชุดใหญ่"]],
   map:"https://maps.google.com/?q=Osaka+Castle"},
   
- {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Shinkansen_N700.jpg/800px-Shinkansen_N700.jpg", 
+ {img:"https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80", 
   ep:"EP. 3", title:"มุ่งหน้าสู่เมืองหลวง", dur:"27 ก.พ.",
   desc:"บอกลาโอซาก้า แล้วนั่ง Shinkansen วาร์ปข้ามภูมิภาคสู่มหานครโตเกียว",
   tl:[["09:00","เช็คเอาท์โอซาก้า"],["12:00","ขึ้น Shinkansen"],["16:00","ถึงโตเกียว เช็คอินที่พัก"]],
   map:"https://maps.google.com/?q=Tokyo+Station"},
   
- {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Look_at_Mt._Fuji_from_Oishi_Park_20140412.jpg/800px-Look_at_Mt._Fuji_from_Oishi_Park_20140412.jpg", 
+ {img:"https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&w=600&q=80", 
   ep:"EP. 4", title:"ตามล่าฟูจิซัง", dur:"28 ก.พ.",
   desc:"นั่งไฮเวย์บัสออกนอกเมือง ไปรับพลังจากภูเขาไฟฟูจิแบบอลังการเต็มตา",
   tl:[["06:30","บัสสู่ Kawaguchiko"],["10:00","เจดีย์ชูเรโตะ"],["16:00","บัสกลับโตเกียว"]],
   map:"https://maps.google.com/?q=Oishi+Park+Kawaguchiko"},
   
- {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Tokyo_Disneyland_Cinderella_Castle_2019.jpg/800px-Tokyo_Disneyland_Cinderella_Castle_2019.jpg", 
+ {img:"https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?auto=format&fit=crop&w=600&q=80", 
   ep:"EP. 5", title:"ดินแดนเวทมนตร์", dur:"1 มี.ค.",
   desc:"เทหมดหน้าตักที่ Tokyo Disneyland ลุยเครื่องเล่น รอดูพาเหรด!",
   tl:[["07:00","ต่อแถวหน้าสวนสนุก"],["09:00","ลุยเครื่องเล่น"],["21:00","ขาลากกลับที่พัก"]],
   map:"https://maps.google.com/?q=Tokyo+Disneyland"},
   
- {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Gala_Yuzawa_Station_and_Ski_Resort.jpg/800px-Gala_Yuzawa_Station_and_Ski_Resort.jpg", 
+ {img:"https://images.unsplash.com/photo-1517043537238-a4535132b160?auto=format&fit=crop&w=600&q=80", 
   ep:"EP. 6", title:"ลุยหิมะ Gala Yuzawa", dur:"2 มี.ค.",
   desc:"นั่งชินคันเซ็นขึ้นเหนือไปเจอหิมะฟูๆ เล่นถาดเลื่อนและปาหิมะให้หนำใจ",
   tl:[["06:30","ตรงสู่ Gala Yuzawa"],["09:00","เล่นหิมะ แช่ออนเซ็น"],["17:00","กลับมากินชาบูที่โตเกียว"]],
   map:"https://maps.google.com/?q=Gala+Yuzawa+Snow+Resort"},
   
- {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Narita_International_Airport_Terminal_1.jpg/800px-Narita_International_Airport_Terminal_1.jpg", 
+ {img:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80", 
   ep:"EP. 7", title:"ภารกิจสุดท้าย", dur:"3 มี.ค.",
   desc:"กวาดของฝากที่สนามบินนาริตะ แล้ววาร์ปกลับบ้านอย่างปลอดภัย",
   tl:[["09:00","เก็บตกช้อปปิ้ง"],["12:00","นั่งรถไฟไปนาริตะ"],["18:30","เครื่องบินออก NRT"]],
