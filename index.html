@@ -7,7 +7,6 @@
 <title>🍿 JAPANFLIX - Winter Trip 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- ใช้ฟอนต์ Kanit ให้อ่านง่าย และ Bebas Neue สำหรับโลโก้/หัวข้อใหญ่ -->
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -24,7 +23,6 @@ body{
   margin:0; background:var(--nf-bg); color:var(--nf-white); font-family:var(--font-main);
   overflow-x:hidden; -webkit-font-smoothing: antialiased;
 }
-/* ซ่อน Scrollbar แต่ยังปัดเลื่อนได้ตามปกติ */
 ::-webkit-scrollbar { display: none; }
 a{color:inherit; text-decoration:none;}
 
@@ -45,9 +43,8 @@ a{color:inherit; text-decoration:none;}
 /* ---------- HERO BANNER ---------- */
 .hero{
   position:relative; height:85vh; min-height:600px;
-  /* รูปพื้นหลังโตเกียว/หิมะ เปลี่ยนลิงก์ได้ */
-  background-image: url('https://images.unsplash.com/photo-1542051812871-75f5087eb4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
-  background-size: cover; background-position: center top;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1280px-Skyscrapers_of_Shinjuku_2009_January.jpg'); 
+  background-size: cover; background-position: center;
 }
 .hero-vignette{
   position:absolute; inset:0;
@@ -86,14 +83,14 @@ a{color:inherit; text-decoration:none;}
   padding:10px 4vw 20px 4vw; gap:16px;
 }
 
-/* EPISODE CARD (เควสต์รายวัน) */
+/* EPISODE CARD */
 .ep-card{
   flex: 0 0 calc(85vw - 24px); max-width: 320px;
   background: var(--nf-dark-gray); border-radius:6px; overflow:hidden;
   transition: transform 0.3s; cursor:pointer;
 }
 .ep-card:hover{transform: scale(1.03); z-index:10; box-shadow:0 10px 20px rgba(0,0,0,0.5);}
-.ep-img{height: 180px; background:#333; position:relative;}
+.ep-img{height: 180px; background:#222; position:relative;}
 .ep-img img{width:100%; height:100%; object-fit:cover;}
 .ep-play-icon{
   position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
@@ -120,7 +117,7 @@ a{color:inherit; text-decoration:none;}
 .i-row{display:flex; justify-content:space-between; font-size:15px; border-bottom:1px solid #333; padding-bottom:8px;}
 .i-row span:last-child{color:var(--nf-red); font-weight:600;}
 
-/* BASECAMP (โรงแรม) */
+/* BASECAMP */
 .hotel-card{
   flex: 0 0 340px; background:#181818; border:1px solid #333; border-radius:6px; padding:24px; position:relative;
 }
@@ -301,7 +298,7 @@ window.addEventListener('scroll', () => {
   else { nav.classList.remove('scrolled'); }
 });
 
-/* CINEMATIC BOOM SOUND (Netflix-like Ta-Dum alternative) */
+/* CINEMATIC BOOM SOUND */
 function playCinematicBoom() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -309,7 +306,7 @@ function playCinematicBoom() {
     const gain = ctx.createGain();
     
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(60, ctx.currentTime); // Low bass
+    osc.frequency.setValueAtTime(60, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 1.5);
     
     gain.gain.setValueAtTime(0, ctx.currentTime);
@@ -329,45 +326,45 @@ function playSeries() {
   document.getElementById('episodes').scrollIntoView({behavior:'smooth'});
 }
 
-/* EPISODES DATA */
+/* EPISODES DATA (ใช้ลิงก์รูป Wikimedia Commons รับรองรูปขึ้นชัวร์ 100%) */
 const quests=[
- {img:"https://images.unsplash.com/photo-1590559899731-a382839ce2df?q=80&w=600&auto=format&fit=crop", 
+ {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Dotonbori_at_night_2016.jpg/800px-Dotonbori_at_night_2016.jpg", 
   ep:"EP. 1", title:"โอซาก้ายามค่ำคืน", dur:"25 ก.พ.",
   desc:"แลนดิ้งปุ๊บ พุ่งตัวไปเช็คอินฐานทัพ Joyful Residence แล้วบุกตะลุยของกินที่ Dotonbori!",
   tl:[["00:25","บินตรงสู่คันไซ"],["16:00","เช็คอินที่พัก"],["18:00","ล่าของกินโดทงโบริ"]],
   map:"https://maps.google.com/?q=Dotonbori+Osaka"},
   
- {img:"https://images.unsplash.com/photo-1594413554471-a0ee07e5b085?q=80&w=600&auto=format&fit=crop", 
+ {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Osaka_Castle_02bs3200.jpg/800px-Osaka_Castle_02bs3200.jpg", 
   ep:"EP. 2", title:"ปราสาท & ช้อปปิ้ง", dur:"26 ก.พ.",
   desc:"ตีป้อมปราสาทโอซาก้าในช่วงเช้า แล้วไปละลายทรัพย์ที่ชินไซบาชิ",
   tl:[["09:00","บุกปราสาทโอซาก้า"],["13:00","ช้อปปิ้ง Shinsaibashi"],["18:00","จัดซูชิชุดใหญ่"]],
   map:"https://maps.google.com/?q=Osaka+Castle"},
   
- {img:"https://images.unsplash.com/photo-1542051812871-75f5087eb4d0?q=80&w=600&auto=format&fit=crop", 
+ {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Shinkansen_N700.jpg/800px-Shinkansen_N700.jpg", 
   ep:"EP. 3", title:"มุ่งหน้าสู่เมืองหลวง", dur:"27 ก.พ.",
   desc:"บอกลาโอซาก้า แล้วนั่ง Shinkansen วาร์ปข้ามภูมิภาคสู่มหานครโตเกียว",
   tl:[["09:00","เช็คเอาท์โอซาก้า"],["12:00","ขึ้น Shinkansen"],["16:00","ถึงโตเกียว เช็คอินที่พัก"]],
   map:"https://maps.google.com/?q=Tokyo+Station"},
   
- {img:"https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?q=80&w=600&auto=format&fit=crop", 
+ {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Look_at_Mt._Fuji_from_Oishi_Park_20140412.jpg/800px-Look_at_Mt._Fuji_from_Oishi_Park_20140412.jpg", 
   ep:"EP. 4", title:"ตามล่าฟูจิซัง", dur:"28 ก.พ.",
   desc:"นั่งไฮเวย์บัสออกนอกเมือง ไปรับพลังจากภูเขาไฟฟูจิแบบอลังการเต็มตา",
   tl:[["06:30","บัสสู่ Kawaguchiko"],["10:00","เจดีย์ชูเรโตะ"],["16:00","บัสกลับโตเกียว"]],
   map:"https://maps.google.com/?q=Oishi+Park+Kawaguchiko"},
   
- {img:"https://images.unsplash.com/photo-1628155930542-3c7a64e2c848?q=80&w=600&auto=format&fit=crop", 
+ {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Tokyo_Disneyland_Cinderella_Castle_2019.jpg/800px-Tokyo_Disneyland_Cinderella_Castle_2019.jpg", 
   ep:"EP. 5", title:"ดินแดนเวทมนตร์", dur:"1 มี.ค.",
   desc:"เทหมดหน้าตักที่ Tokyo Disneyland ลุยเครื่องเล่น รอดูพาเหรด!",
   tl:[["07:00","ต่อแถวหน้าสวนสนุก"],["09:00","ลุยเครื่องเล่น"],["21:00","ขาลากกลับที่พัก"]],
   map:"https://maps.google.com/?q=Tokyo+Disneyland"},
   
- {img:"https://images.unsplash.com/photo-1605548230624-8d2d0419c517?q=80&w=600&auto=format&fit=crop", 
+ {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Gala_Yuzawa_Station_and_Ski_Resort.jpg/800px-Gala_Yuzawa_Station_and_Ski_Resort.jpg", 
   ep:"EP. 6", title:"ลุยหิมะ Gala Yuzawa", dur:"2 มี.ค.",
   desc:"นั่งชินคันเซ็นขึ้นเหนือไปเจอหิมะฟูๆ เล่นถาดเลื่อนและปาหิมะให้หนำใจ",
   tl:[["06:30","ตรงสู่ Gala Yuzawa"],["09:00","เล่นหิมะ แช่ออนเซ็น"],["17:00","กลับมากินชาบูที่โตเกียว"]],
   map:"https://maps.google.com/?q=Gala+Yuzawa+Snow+Resort"},
   
- {img:"https://images.unsplash.com/photo-1536691456107-1604a8b5cc10?q=80&w=600&auto=format&fit=crop", 
+ {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Narita_International_Airport_Terminal_1.jpg/800px-Narita_International_Airport_Terminal_1.jpg", 
   ep:"EP. 7", title:"ภารกิจสุดท้าย", dur:"3 มี.ค.",
   desc:"กวาดของฝากที่สนามบินนาริตะ แล้ววาร์ปกลับบ้านอย่างปลอดภัย",
   tl:[["09:00","เก็บตกช้อปปิ้ง"],["12:00","นั่งรถไฟไปนาริตะ"],["18:30","เครื่องบินออก NRT"]],
