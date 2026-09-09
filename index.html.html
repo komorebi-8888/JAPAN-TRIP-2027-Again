@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>🍿 JAPANFLIX - Winter Trip 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- ใช้ฟอนต์ Kanit ให้อ่านง่าย และ Bebas Neue สำหรับโลโก้/หัวข้อใหญ่ -->
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{
+  --nf-bg: #141414;
+  --nf-red: #e50914;
+  --nf-white: #ffffff;
+  --nf-gray: #808080;
+  --nf-dark-gray: #181818;
+  --font-main: 'Kanit', sans-serif;
+  --font-title: 'Bebas Neue', cursive;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--nf-bg); color:var(--nf-white); font-family:var(--font-main);
+  overflow-x:hidden; -webkit-font-smoothing: antialiased;
+}
+/* ซ่อน Scrollbar แต่ยังปัดเลื่อนได้ตามปกติ */
+::-webkit-scrollbar { display: none; }
+a{color:inherit; text-decoration:none;}
+
+/* ---------- NAVBAR ---------- */
+.navbar{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; padding:20px 4vw;
+  background:linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  transition: background 0.3s;
+}
+.navbar.scrolled{background:var(--nf-bg);}
+.logo{font-family:var(--font-title); color:var(--nf-red); font-size:36px; letter-spacing:1px; cursor:pointer; margin-right:40px;}
+.nav-links{display:flex; gap:24px;}
+.nav-links a{color:#e5e5e5; font-size:15px; font-weight:500; transition:0.3s;}
+.nav-links a:hover{color:#fff; font-weight:600;}
+@media(max-width:768px){.nav-links{display:none;}}
+
+/* ---------- HERO BANNER ---------- */
+.hero{
+  position:relative; height:85vh; min-height:600px;
+  /* รูปพื้นหลังโตเกียว/หิมะ เปลี่ยนลิงก์ได้ */
+  background-image: url('https://images.unsplash.com/photo-1542051812871-75f5087eb4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
+  background-size: cover; background-position: center top;
+}
+.hero-vignette{
+  position:absolute; inset:0;
+  background: linear-gradient(to right, #141414 10%, transparent 70%),
+              linear-gradient(to top, #141414 5%, transparent 40%);
+}
+.hero-content{
+  position:absolute; bottom:15%; left:4vw; width:90%; max-width:650px; z-index:10;
+}
+.n-series{display:flex; align-items:center; gap:8px; margin-bottom:12px; font-weight:700; font-size:14px; letter-spacing:2px; color:#ccc;}
+.n-icon{background:var(--nf-red); color:#fff; padding:2px 6px; font-size:12px; border-radius:2px;}
+.hero-title{font-family:var(--font-title); font-size:clamp(50px, 8vw, 100px); line-height:1; margin:0 0 16px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing:2px;}
+.hero-meta{display:flex; align-items:center; gap:12px; font-weight:600; margin-bottom:16px; font-size:16px;}
+.match{color:#46d369;}
+.age-rating{border:1px solid #fff; padding:2px 6px; font-size:12px;}
+.hero-desc{font-size:clamp(15px, 2vw, 18px); color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); margin-bottom:30px; line-height:1.5;}
+
+/* ปุ่ม HERO */
+.hero-btns{display:flex; gap:16px;}
+.btn-play, .btn-info{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:10px 28px; border-radius:4px; font-family:var(--font-main); font-weight:700; font-size:18px; cursor:pointer; transition:0.2s; border:none;
+}
+.btn-play{background:#fff; color:#000;}
+.btn-play:hover{background:rgba(255,255,255,0.7);}
+.btn-info{background:rgba(109,109,110,0.7); color:#fff;}
+.btn-info:hover{background:rgba(109,109,110,0.4);}
+
+/* ---------- ROWS (NETFLIX SLIDERS) ---------- */
+.section{padding:0 0 4vw 0; position:relative; z-index:20;}
+.section:first-of-type{margin-top:-6vw;}
+.row-title{font-size:22px; font-weight:600; margin:0 0 16px 4vw;}
+
+.row-posters{
+  display:flex; overflow-y:hidden; overflow-x:auto; scroll-behavior:smooth;
+  padding:10px 4vw 20px 4vw; gap:16px;
+}
+
+/* EPISODE CARD (เควสต์รายวัน) */
+.ep-card{
+  flex: 0 0 calc(85vw - 24px); max-width: 320px;
+  background: var(--nf-dark-gray); border-radius:6px; overflow:hidden;
+  transition: transform 0.3s; cursor:pointer;
+}
+.ep-card:hover{transform: scale(1.03); z-index:10; box-shadow:0 10px 20px rgba(0,0,0,0.5);}
+.ep-img{height: 180px; background:#333; position:relative;}
+.ep-img img{width:100%; height:100%; object-fit:cover;}
+.ep-play-icon{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:40px; height:40px; border-radius:50%; border:2px solid #fff;
+  display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5);
+  opacity:0; transition:0.3s; font-size:18px;
+}
+.ep-card:hover .ep-play-icon{opacity:1;}
+.ep-info{padding:20px;}
+.ep-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+.ep-name{font-weight:700; font-size:16px;}
+.ep-dur{font-size:13px; color:var(--nf-gray);}
+.ep-desc{font-size:14px; color:#aaa; line-height:1.4; margin-bottom:16px;}
+.ep-timeline{font-size:13px; color:#ddd;}
+.ep-timeline span{display:block; margin-bottom:6px; padding-left:12px; border-left:3px solid var(--nf-red);}
+
+/* BUDGET & TICKETS CARDS */
+.item-card{
+  flex: 0 0 300px; background:var(--nf-dark-gray); padding:24px; border-radius:6px;
+}
+.item-tag{font-size:11px; font-weight:700; background:var(--nf-red); padding:4px 8px; border-radius:2px; display:inline-block; margin-bottom:12px;}
+.item-title{font-size:20px; font-weight:700; margin-bottom:20px;}
+.item-list{display:flex; flex-direction:column; gap:12px;}
+.i-row{display:flex; justify-content:space-between; font-size:15px; border-bottom:1px solid #333; padding-bottom:8px;}
+.i-row span:last-child{color:var(--nf-red); font-weight:600;}
+
+/* BASECAMP (โรงแรม) */
+.hotel-card{
+  flex: 0 0 340px; background:#181818; border:1px solid #333; border-radius:6px; padding:24px; position:relative;
+}
+.h-status{position:absolute; top:24px; right:24px; font-size:12px; font-weight:700; padding:4px 8px; border-radius:4px;}
+.h-status.ok{background:#46d369; color:#000;}
+.h-status.wait{background:var(--nf-red); color:#fff; animation:blink 1.5s infinite;}
+@keyframes blink{50%{opacity:0.4;}}
+
+/* ---------- PROFILE SELECTION (CAST) ---------- */
+.profiles-section{text-align:center; padding:60px 4vw 80px;}
+.profiles-title{font-size:clamp(30px, 4vw, 40px); font-weight:400; margin-bottom:40px; font-family:var(--font-main); letter-spacing:1px;}
+.profiles-wrap{display:flex; justify-content:center; gap:4vw; flex-wrap:wrap;}
+.profile{display:flex; flex-direction:column; align-items:center; cursor:pointer;}
+.profile-img{
+  width:10vw; height:10vw; min-width:90px; min-height:90px; max-width:150px; max-height:150px;
+  border-radius:4px; background:#333; margin-bottom:12px; border:3px solid transparent; transition:0.3s;
+  display:grid; place-items:center; font-size:36px;
+}
+.profile:hover .profile-img{border-color:#fff;}
+.profile-name{color:var(--nf-gray); font-size:1vw; min-font-size:15px; font-weight:500; transition:0.3s;}
+.profile:hover .profile-name{color:#fff;}
+
+.btn-invite{
+  margin-top:50px; background:transparent; border:1px solid var(--nf-gray); color:var(--nf-gray);
+  padding:12px 32px; font-family:var(--font-main); font-size:18px; cursor:pointer; transition:0.3s; letter-spacing:1px;
+}
+.btn-invite:hover{color:#fff; border-color:#fff;}
+
+/* TOAST */
+.toast{position:fixed; z-index:200; left:50%; bottom:30px; transform:translate(-50%,120px); background:var(--nf-red); padding:16px 32px; font-weight:600; font-size:16px; color:#fff; transition:0.3s; border-radius:4px;}
+.toast.show{transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="logo">JAPANFLIX</div>
+  <div class="nav-links">
+    <a href="#">หน้าหลัก</a>
+    <a href="#episodes">ซีซั่น 1</a>
+    <a href="#mylist">การเดินทางของฉัน</a>
+    <a href="#budget">ทุนสร้างซีรีส์</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="n-series"><span class="n-icon">N</span> SERIES</div>
+    <h1 class="hero-title">JAPAN WINTER TRIP</h1>
+    <div class="hero-meta">
+      <span class="match">99% Match</span>
+      <span>2027</span>
+      <span class="age-rating">SNOW+</span>
+      <span>7 Episodes</span>
+    </div>
+    <div class="hero-desc">
+      เตรียมตัวให้พร้อมสำหรับภารกิจผลาญเงินออม! ติดตามแก๊งผู้กล้า 3 คนกับการเดินทางข้ามมหานครโอซาก้าและโตเกียว พร้อมตามล่าฟูจิซังและพุ่งทะยานสู่ลานสกี
+    </div>
+    <div class="hero-btns">
+      <button class="btn-play" onclick="playSeries()"><span style="font-size:24px;">▶</span> เล่นเลย</button>
+      <a href="#mylist" class="btn-info"><span style="font-size:24px;">ⓘ</span> ข้อมูลการเดินทาง</a>
+    </div>
+  </div>
+</section>
+
+<!-- EPISODES (STAGE 1-7) -->
+<section class="section" id="episodes">
+  <h2 class="row-title">ซีซั่น 1 (Episodes)</h2>
+  <div class="row-posters" id="epList">
+    <!-- Rendered via JS -->
+  </div>
+</section>
+
+<!-- MY LIST (TICKETS & HOTELS) -->
+<section class="section" id="mylist">
+  <h2 class="row-title">การเดินทางของฉัน (My List)</h2>
+  <div class="row-posters">
+    
+    <!-- FLIGHTS -->
+    <div class="item-card">
+      <span class="item-tag">FLIGHT TICKET</span>
+      <div class="item-title">✈️ มังกรเหล็กข้ามมหาสมุทร</div>
+      <div class="item-list">
+        <div class="i-row"><span>ขาไป (BKK ➔ KIX)</span><span>VZ820</span></div>
+        <div class="i-row"><span>เวลาออก</span><span>00:25 น.</span></div>
+        <br>
+        <div class="i-row"><span>ขากลับ (NRT ➔ BKK)</span><span>VZ833</span></div>
+        <div class="i-row"><span>เวลาออก</span><span>18:30 น.</span></div>
+      </div>
+    </div>
+
+    <!-- OSAKA HOTEL -->
+    <div class="hotel-card">
+      <span class="h-status ok">ยืนยันแล้ว</span>
+      <div style="font-size:13px; color:var(--nf-gray); margin-bottom:4px;">OSAKA BASECAMP (2 คืน)</div>
+      <div class="item-title">🏠 Joyful Residence 302</div>
+      <div style="font-size:14px; color:#ccc; margin-bottom:16px;">
+        📍 ย่าน Nishinari Ward, Osaka<br>(เดิน 3 นาทีถึงสถานีรถไฟ Hanazonocho)
+      </div>
+      <div class="item-list" style="margin-bottom:20px;">
+        <div class="i-row"><span>เช็คอิน</span><span>25 ก.พ. 2027</span></div>
+        <div class="i-row"><span>เช็คเอาท์</span><span>27 ก.พ. 2027</span></div>
+      </div>
+      <button class="btn-info" style="width:100%; font-size:15px; padding:10px;" onclick="window.open('https://maps.google.com/?q=2-3-9+Hanazonokita+Nishinari+Ward+Osaka')">📍 ดูโลเคชั่น (แผนที่)</button>
+    </div>
+
+    <!-- TOKYO HOTEL (WANTED) -->
+    <div class="hotel-card" style="border-color:var(--nf-red);">
+      <span class="h-status wait">ต้องการด่วน!</span>
+      <div style="font-size:13px; color:var(--nf-gray); margin-bottom:4px;">TOKYO BASECAMP (4 คืน)</div>
+      <div class="item-title" style="color:var(--nf-red);">🏠 ยังไม่มีที่ซุกหัวนอน!</div>
+      <div style="font-size:14px; color:#ccc; margin-bottom:16px;">
+        📍 <b>เป้าหมาย:</b> Ueno, Tokyo Station<br>(เงื่อนไข: เดินทางไปต่อที่อื่นง่ายที่สุด!)
+      </div>
+      <div class="item-list" style="margin-bottom:20px;">
+        <div class="i-row"><span>เช็คอิน</span><span>27 ก.พ. 2027</span></div>
+        <div class="i-row"><span>เช็คเอาท์</span><span>3 มี.ค. 2027</span></div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-play" style="width:100%; font-size:13px; padding:10px;" onclick="window.open('https://www.google.com/travel/hotels/Tokyo?checkin=2027-02-27&checkout=2027-03-03&adults=3')">🏨 หาโรงแรม</button>
+        <button class="btn-play" style="width:100%; font-size:13px; padding:10px; background:var(--nf-red); color:#fff;" onclick="window.open('https://www.airbnb.com/s/Tokyo--Japan/homes?checkin=2027-02-27&checkout=2027-03-03&adults=3')">🏠 หา Airbnb</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section class="section" id="budget">
+  <h2 class="row-title">ทุนสร้างซีรีส์ (Budget & Costs)</h2>
+  <div class="row-posters">
+    <!-- BUDGET TOTAL -->
+    <div class="item-card">
+      <span class="item-tag">OVERALL BUDGET</span>
+      <div class="item-title">💰 งบประมาณ / คน</div>
+      <div style="font-size:32px; font-weight:700; color:var(--nf-red); margin-bottom:20px; font-family:var(--font-title); letter-spacing:1px;">฿33K - 38K</div>
+      <div class="item-list">
+        <div class="i-row"><span>ตั๋วเครื่องบิน</span><span>~฿11,000</span></div>
+        <div class="i-row"><span>ที่พัก 6 คืน</span><span>~฿6,000</span></div>
+        <div class="i-row"><span>ค่าเดินทางรวม</span><span>~฿8,000</span></div>
+        <div class="i-row"><span>ค่าเข้าดิสนีย์/สกี</span><span>~฿3,000</span></div>
+        <div class="i-row"><span>ค่ากินประทังชีวิต</span><span>~฿8,000</span></div>
+      </div>
+    </div>
+
+    <!-- TRANSPORT COST -->
+    <div class="item-card">
+      <span class="item-tag">TRANSPORTATION</span>
+      <div class="item-title">🚂 ค่าเดินทางหลักๆ</div>
+      <div class="item-list" style="margin-top:16px;">
+        <div class="i-row"><span>Osaka ➔ Tokyo (Shinkansen)</span><span>~¥14,000</span></div>
+        <div class="i-row"><span>Tokyo ➔ Kawaguchiko (Bus)</span><span>~¥2,200</span></div>
+        <div class="i-row"><span>Tokyo ↔ Gala Yuzawa</span><span>~¥13,500</span></div>
+        <div class="i-row"><span>เข้าเมืองโอซาก้า</span><span>~¥1,400</span></div>
+        <div class="i-row"><span>บัตรดิสนีย์แลนด์ (1 Day)</span><span>~¥9,000</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAST / PROFILES -->
+<div class="profiles-section">
+  <h1 class="profiles-title">ใครกำลังรับชมอยู่?</h1>
+  <div class="profiles-wrap" id="profilesWrap">
+    <!-- Rendered via JS -->
+  </div>
+  <button class="btn-invite" onclick="inviteFriend()">แชร์ลิงก์ให้ผู้ร่วมแสดง (Copy Link)</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Navbar Scroll Effect
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 50) { nav.classList.add('scrolled'); }
+  else { nav.classList.remove('scrolled'); }
+});
+
+/* CINEMATIC BOOM SOUND (Netflix-like Ta-Dum alternative) */
+function playCinematicBoom() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(60, ctx.currentTime); // Low bass
+    osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 1.5);
+    
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.5);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start();
+    osc.stop(ctx.currentTime + 1.5);
+  } catch(e) {}
+}
+
+function playSeries() {
+  playCinematicBoom();
+  document.getElementById('episodes').scrollIntoView({behavior:'smooth'});
+}
+
+/* EPISODES DATA */
+const quests=[
+ {img:"https://images.unsplash.com/photo-1590559899731-a382839ce2df?q=80&w=600&auto=format&fit=crop", 
+  ep:"EP. 1", title:"โอซาก้ายามค่ำคืน", dur:"25 ก.พ.",
+  desc:"แลนดิ้งปุ๊บ พุ่งตัวไปเช็คอินฐานทัพ Joyful Residence แล้วบุกตะลุยของกินที่ Dotonbori!",
+  tl:[["00:25","บินตรงสู่คันไซ"],["16:00","เช็คอินที่พัก"],["18:00","ล่าของกินโดทงโบริ"]],
+  map:"https://maps.google.com/?q=Dotonbori+Osaka"},
+  
+ {img:"https://images.unsplash.com/photo-1594413554471-a0ee07e5b085?q=80&w=600&auto=format&fit=crop", 
+  ep:"EP. 2", title:"ปราสาท & ช้อปปิ้ง", dur:"26 ก.พ.",
+  desc:"ตีป้อมปราสาทโอซาก้าในช่วงเช้า แล้วไปละลายทรัพย์ที่ชินไซบาชิ",
+  tl:[["09:00","บุกปราสาทโอซาก้า"],["13:00","ช้อปปิ้ง Shinsaibashi"],["18:00","จัดซูชิชุดใหญ่"]],
+  map:"https://maps.google.com/?q=Osaka+Castle"},
+  
+ {img:"https://images.unsplash.com/photo-1542051812871-75f5087eb4d0?q=80&w=600&auto=format&fit=crop", 
+  ep:"EP. 3", title:"มุ่งหน้าสู่เมืองหลวง", dur:"27 ก.พ.",
+  desc:"บอกลาโอซาก้า แล้วนั่ง Shinkansen วาร์ปข้ามภูมิภาคสู่มหานครโตเกียว",
+  tl:[["09:00","เช็คเอาท์โอซาก้า"],["12:00","ขึ้น Shinkansen"],["16:00","ถึงโตเกียว เช็คอินที่พัก"]],
+  map:"https://maps.google.com/?q=Tokyo+Station"},
+  
+ {img:"https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?q=80&w=600&auto=format&fit=crop", 
+  ep:"EP. 4", title:"ตามล่าฟูจิซัง", dur:"28 ก.พ.",
+  desc:"นั่งไฮเวย์บัสออกนอกเมือง ไปรับพลังจากภูเขาไฟฟูจิแบบอลังการเต็มตา",
+  tl:[["06:30","บัสสู่ Kawaguchiko"],["10:00","เจดีย์ชูเรโตะ"],["16:00","บัสกลับโตเกียว"]],
+  map:"https://maps.google.com/?q=Oishi+Park+Kawaguchiko"},
+  
+ {img:"https://images.unsplash.com/photo-1628155930542-3c7a64e2c848?q=80&w=600&auto=format&fit=crop", 
+  ep:"EP. 5", title:"ดินแดนเวทมนตร์", dur:"1 มี.ค.",
+  desc:"เทหมดหน้าตักที่ Tokyo Disneyland ลุยเครื่องเล่น รอดูพาเหรด!",
+  tl:[["07:00","ต่อแถวหน้าสวนสนุก"],["09:00","ลุยเครื่องเล่น"],["21:00","ขาลากกลับที่พัก"]],
+  map:"https://maps.google.com/?q=Tokyo+Disneyland"},
+  
+ {img:"https://images.unsplash.com/photo-1605548230624-8d2d0419c517?q=80&w=600&auto=format&fit=crop", 
+  ep:"EP. 6", title:"ลุยหิมะ Gala Yuzawa", dur:"2 มี.ค.",
+  desc:"นั่งชินคันเซ็นขึ้นเหนือไปเจอหิมะฟูๆ เล่นถาดเลื่อนและปาหิมะให้หนำใจ",
+  tl:[["06:30","ตรงสู่ Gala Yuzawa"],["09:00","เล่นหิมะ แช่ออนเซ็น"],["17:00","กลับมากินชาบูที่โตเกียว"]],
+  map:"https://maps.google.com/?q=Gala+Yuzawa+Snow+Resort"},
+  
+ {img:"https://images.unsplash.com/photo-1536691456107-1604a8b5cc10?q=80&w=600&auto=format&fit=crop", 
+  ep:"EP. 7", title:"ภารกิจสุดท้าย", dur:"3 มี.ค.",
+  desc:"กวาดของฝากที่สนามบินนาริตะ แล้ววาร์ปกลับบ้านอย่างปลอดภัย",
+  tl:[["09:00","เก็บตกช้อปปิ้ง"],["12:00","นั่งรถไฟไปนาริตะ"],["18:30","เครื่องบินออก NRT"]],
+  map:"https://maps.google.com/?q=Narita+International+Airport"}
+];
+
+const epList = document.getElementById("epList");
+quests.forEach((q) => {
+  const card = document.createElement("div");
+  card.className = "ep-card";
+  card.onclick = () => { playCinematicBoom(); window.open(q.map, '_blank'); };
+  card.innerHTML = `
+    <div class="ep-img">
+      <img src="${q.img}" alt="${q.title}">
+      <div class="ep-play-icon">▶</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-top">
+        <span class="ep-name">${q.ep} : ${q.title}</span>
+        <span class="ep-dur">${q.dur}</span>
+      </div>
+      <div class="ep-desc">${q.desc}</div>
+      <div class="ep-timeline">
+        ${q.tl.map(t => `<span><b>${t[0]}</b> ${t[1]}</span>`).join("")}
+      </div>
+    </div>
+  `;
+  epList.appendChild(card);
+});
+
+/* PROFILES */
+const party = [
+  {name:"คุณ (P1)", img:"🤓", color:"#e50914"},
+  {name:"เพื่อน 1", img:"😎", color:"#0071eb"},
+  {name:"เพื่อน 2", img:"🥳", color:"#e5a909"},
+  {name:"เพิ่มผู้ร่วมทาง", img:"+", color:"#333"}
+];
+const pWrap = document.getElementById("profilesWrap");
+party.forEach(p => {
+  const d = document.createElement("div");
+  d.className = "profile";
+  d.innerHTML = `
+    <div class="profile-img" style="background:${p.color};">${p.img}</div>
+    <div class="profile-name">${p.name}</div>
+  `;
+  pWrap.appendChild(d);
+});
+
+function inviteFriend(){
+  const msg="🍿 JAPANFLIX - WINTER TRIP 2027 ❄️\nซีรีส์ทัวร์ผลาญเงินออมพร้อมฉายแล้ว! เข้าไปดูพรีวิวแพลนเที่ยว แล้วช่วยกันหาโลเคชั่นพักที่โตเกียวด่วน!\n\nรับชมซีรีส์ได้ที่นี่ 👇\n"+location.href;
+  if(navigator.clipboard){navigator.clipboard.writeText(msg).then(()=>showToast("คัดลอกลิงก์ให้เพื่อนเรียบร้อย!")).catch(()=>showToast("คัดลอกลิงก์แล้วส่งให้เพื่อนเลย!"));}
+  else showToast("คัดลอกลิงก์ด้านบนส่งให้เพื่อนเลย!");
+}
+
+function showToast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(window._tt);window._tt=setTimeout(()=>e.classList.remove("show"),2000);}
+</script>
+</body>
+</html>
